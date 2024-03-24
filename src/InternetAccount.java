@@ -1,4 +1,4 @@
-package user;
+package PasswordVault;
 
 public class InternetAccount extends Account {
 
