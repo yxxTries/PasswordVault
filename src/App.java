@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 import java.sql.*;
-import java.sql.Statement;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -15,10 +14,10 @@ public class App {
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "//DatabasePassword");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", //databasepassword);
            if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("Connection to SQLite established.");
+                System.out.println("Connection to MySQL established.");
 
                 ResultSet tables = meta.getTables(null, null, "versions", null);
                 if (tables.next()) {
@@ -28,7 +27,6 @@ public class App {
                         if (rs.next()) System.out.println("Database found. Version: " + rs.getInt("version"));
                     }
                 } else {
-                    createTables(conn);
                     System.out.println("Database initialized.");
                 }
 
@@ -43,11 +41,11 @@ public class App {
                 else {
                     user = User.login(conn, input);
                 }
-                // if (user == null) throw new RuntimeException("Error while logging in.");
-                // System.out.println("User " + user.getUsername() + " is now logged in.");
+                if (user == null) throw new RuntimeException("Error while logging in.");
+                System.out.println("User " + user.getUsername() + " is now logged in.");
 
-                // Menu menu = new Menu(conn, input, user);
-                // menu.menu();
+                Menu menu = new Menu(conn, input, user);
+                menu.menu();
             }
 
             
@@ -56,17 +54,5 @@ public class App {
             System.out.println(e);
         }
 
-    }
-
-    public static void createTables(Connection conn) throws SQLException {
-        // Create tables
-        try (PreparedStatement stmt = conn.prepareStatement("CREATE TABLE versions (version integer)")) {
-            stmt.executeUpdate();
-            try (PreparedStatement st = conn.prepareStatement("INSERT INTO versions(version) VALUES(?)")) {
-                st.setInt(1, 1);
-                st.executeUpdate();
-            }
-            System.out.println("Database versions table created.");
-        }
     }
 }
