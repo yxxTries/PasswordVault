@@ -14,10 +14,10 @@ public class App {
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", //databasepassword);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "P61rdnyk123#");
            if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("Connection to MySQL established.");
+                System.out.println("Connection to MySql established.");
 
                 ResultSet tables = meta.getTables(null, null, "versions", null);
                 if (tables.next()) {
@@ -27,7 +27,7 @@ public class App {
                         if (rs.next()) System.out.println("Database found. Version: " + rs.getInt("version"));
                     }
                 } else {
-                    System.out.println("Database initialized.");
+                    System.out.println("Database not found");
                 }
 
                 Scanner input = new Scanner(System.in);

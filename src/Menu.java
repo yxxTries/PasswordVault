@@ -139,7 +139,7 @@ public class Menu {
 
     // ***************PRINTING ALL WEBSITES***************
     public void printAllWebsites() throws SQLException {
-        System.out.println("\nWebsites:");
+        System.out.println("\nWebsites and passwords:");
         System.out.println("---------");
         try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM website_data\n" +
                 "LEFT JOIN passwords p on website_data.website_id = p.website_id\n" +
@@ -148,7 +148,7 @@ public class Menu {
             stmt.setInt(1, this.user.getId());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                System.out.println("Website: " + rs.getString("website") + "\n");
+                System.out.println("Website: " + rs.getString("website") + " | " + "Password: " + rs.getString("password") + "\n");
             }
         }
     }
