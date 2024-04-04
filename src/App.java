@@ -14,7 +14,7 @@ public class App {
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "//YOURPASSSORD");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "P61rdnyk123#");
            if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("Connection to MySql established.");

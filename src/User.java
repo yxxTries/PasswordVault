@@ -32,7 +32,7 @@ public class User {
         }
         
         System.out.print("Enter your desired password.\npassword: ");
-        String password = input.next();
+        String password = encryption.encrypt(input.next());
 
         try (PreparedStatement stmt = conn.prepareStatement("SELECT MAX(id) as id FROM users")) {
             ResultSet rs = stmt.executeQuery();
@@ -48,7 +48,7 @@ public class User {
         System.out.print("\nEnter your username and password.\nusername: ");
         String username = input.next();
         System.out.print("password: ");
-        String password = input.next();
+        String password = encryption.encrypt(input.next());
 
         try (PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username LIKE (?)")) {
             stmt.setString(1, username);
@@ -61,7 +61,7 @@ public class User {
                 while (!password.equals(ActualPassword)){
                     System.out.println("Incorrect password. Please try again.");
                     System.out.print("password: ");
-                    password = input.next();
+                    password = encryption.encrypt(input.next());
                 }
                 return new User(username, password, id);
             }
